@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — NON&LO Investments Limited</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #0891b2;
+      --teal-light: #06b6d4;
+      --teal-pale: #e0f7fa;
+      --silver: #4a7c96;
+      --silver-light: #1e4d6b;
+      --white: #ffffff;
+      --ink: #0c2d48;
+      --danger: #dc2626;
+      --danger-pale: #fee2e2;
+      --success: #059669;
+      --success-pale: #d1fae5;
+      --border: rgba(8,145,178,0.18);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f6fafd;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 15px;
+    }
+    .topbar-brand img { height: 32px; width: 32px; border-radius: 50%; }
+    .topbar-brand span.tag {
+      font-weight: 400; font-size: 12px; color: var(--silver);
+      padding-left: 8px; border-left: 1px solid var(--border);
+    }
+    .btn-logout {
+      background: none; border: 1px solid var(--border);
+      color: var(--silver-light); padding: 8px 16px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-logout:hover { background: #f1f5f9; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .panel-title {
+      font-size: 16px; font-weight: 700; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .panel-title i { color: var(--teal); }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: var(--silver-light); margin-bottom: 6px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: inherit; color: var(--ink);
+      background: #fbfeff;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--teal-light);
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+    }
+    .field textarea { resize: vertical; min-height: 80px; }
+
+    .toggle-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0;
+    }
+    .toggle-row label { font-size: 13px; font-weight: 500; }
+    .toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); }
+
+    .img-preview {
+      width: 100%; max-width: 220px; height: 160px;
+      border: 1px dashed var(--border); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background: #fbfeff; margin-top: 8px;
+      color: var(--silver); font-size: 12px;
+    }
+    .img-preview img { width: 100%; height: 100%; object-fit: contain; }
+
+    .form-error {
+      background: var(--danger-pale); color: var(--danger);
+      font-size: 13px; padding: 10px 14px; border-radius: 8px;
+      margin-bottom: 16px; display: none;
+    }
+    .form-error.show { display: block; }
+    .form-success {
+      background: var(--success-pale); color: var(--success);
+      font-size: 13px; padding: 10px 14px; border-radius: 8px;
+      margin-bottom: 16px; display: none;
+    }
+    .form-success.show { display: block; }
+
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-secondary {
+      background: none; border: 1px solid var(--border); color: var(--silver-light);
+      padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-submit { background: var(--teal); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-submit:hover { background: var(--teal-light); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* ─── PRODUCT LIST ─── */
+    .list-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .list-search {
+      flex: 1; min-width: 180px;
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 13px; font-family: inherit;
+    }
+    .list-count { font-size: 13px; color: var(--silver); white-space: nowrap; }
+
+    .product-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid #eef4f8;
+    }
+    .product-row:last-child { border-bottom: none; }
+    .product-row .thumb {
+      width: 56px; height: 56px; border-radius: 8px;
+      object-fit: contain; background: #f6fafd; border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .product-row .thumb-placeholder {
+      width: 56px; height: 56px; border-radius: 8px;
+      background: #f6fafd; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--silver); flex-shrink: 0; font-size: 18px;
+    }
+    .product-row .info { flex: 1; min-width: 0; }
+    .product-row .name { font-weight: 600; font-size: 14px; }
+    .product-row .meta { font-size: 12px; color: var(--silver); margin-top: 2px; }
+    .pill {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 100px; margin-right: 6px;
+    }
+    .pill-instock { background: var(--success-pale); color: #065f46; }
+    .pill-outofstock { background: var(--danger-pale); color: #991b1b; }
+    .pill-featured { background: #fef3c7; color: #92400e; }
+
+    .row-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .icon-btn {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid var(--border); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--silver-light); font-size: 13px;
+    }
+    .icon-btn:hover { background: #f1f5f9; }
+    .icon-btn.danger:hover { background: var(--danger-pale); color: var(--danger); border-color: #fca5a5; }
+
+    .empty-state {
+      text-align: center; padding: 48px 20px; color: var(--silver);
+    }
+    .empty-state i { font-size: 32px; color: var(--border); margin-bottom: 12px; display: block; }
+
+    .loading-state { text-align: center; padding: 40px; color: var(--silver); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <img src="images/logo.png" alt="NON&LO Logo" />
+      NON&amp;LO <span class="tag" id="logged-in-as"></span>
+    </div>
+    <button class="btn-logout" id="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ADD / EDIT PRODUCT FORM -->
+    <div class="panel">
+      <div class="panel-title" id="form-title"><i class="fa-solid fa-circle-plus"></i> Add a Product</div>
+      <div class="form-error" id="form-error"></div>
+      <div class="form-success" id="form-success"></div>
+      <form id="product-form">
+        <input type="hidden" id="product-id" value="" />
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-name">Product Name *</label>
+            <input type="text" id="f-name" required maxlength="200" />
+          </div>
+          <div class="field">
+            <label for="f-category">Category *</label>
+            <select id="f-category" required>
+              <option value="">— Select a category —</option>
+              <option>Surgical Instruments</option>
+              <option>Cardiac & ICU</option>
+              <option>Laboratory & Diagnostics</option>
+              <option>Orthopaedic Devices</option>
+              <option>Clinical Examination</option>
+              <option>Infusion & Injection</option>
+              <option>Respiratory & Anaesthesia</option>
+              <option>Sterilisation Systems</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-brand">Brand / Model</label>
+            <input type="text" id="f-brand" maxlength="200" placeholder="e.g. APEX BSX516" />
+          </div>
+          <div class="field">
+            <label for="f-cert">Certification Info</label>
+            <input type="text" id="f-cert" maxlength="200" placeholder="e.g. NAFDAC Reg No: A3-101303" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-description">Description</label>
+          <textarea id="f-description" maxlength="1000"></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-retail-price">Retail Price (₦) *</label>
+            <input type="number" id="f-retail-price" required min="0" step="0.01" />
+          </div>
+          <div class="field">
+            <label for="f-retail-unit">Retail Unit Label</label>
+            <input type="text" id="f-retail-unit" placeholder="e.g. per unit, per pack (5 rolls)" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-wholesale-price">Wholesale Price (₦)</label>
+            <input type="number" id="f-wholesale-price" min="0" step="0.01" placeholder="Leave blank if N/A" />
+          </div>
+          <div class="field">
+            <label for="f-wholesale-unit">Wholesale Unit Label</label>
+            <input type="text" id="f-wholesale-unit" placeholder="e.g. per carton (1 × 20 units)" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-highlight-tag">Highlight Tag (optional)</label>
+          <select id="f-highlight-tag">
+            <option value="">— None —</option>
+            <option>CE Certified</option>
+            <option>Doctor's Choice</option>
+            <option>Bestseller</option>
+            <option>New Arrival</option>
+            <option>Limited Stock</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-image">Product Image</label>
+          <input type="file" id="f-image" accept="image/*" />
+          <div class="img-preview" id="img-preview">No image selected</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="toggle-row">
+            <input type="checkbox" id="f-in-stock" checked />
+            <label for="f-in-stock">In Stock</label>
+          </div>
+          <div class="toggle-row">
+            <input type="checkbox" id="f-featured" />
+            <label for="f-featured">Show on Homepage (Featured)</label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="submit-btn">Add Product</button>
+          <button type="button" class="btn-secondary" id="cancel-edit-btn" style="display:none;">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="panel">
+      <div class="panel-title"><i class="fa-solid fa-boxes-stacked"></i> All Products</div>
+      <div class="list-controls">
+        <input type="text" class="list-search" id="list-search" placeholder="Search products..." />
+        <div class="list-count" id="list-count"></div>
+      </div>
+      <div id="product-list-container">
+        <div class="loading-state">Loading products…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let _supabase = null;
+    try {
+      _supabase = supabase.createClient(
+        "https://njnddukprpuntwucnjog.supabase.co",
+        "sb_publishable_JWtLN41tmWFRY3UF8VU7iQ_e8y2Eo7t"
+      );
+    } catch (err) {
+      console.error('Supabase failed to load:', err);
+    }
+
+    let allProducts = [];
+    let editingProductId = null;
+    let pendingImageFile = null;
+
+    /* ---------- HELPERS ---------- */
+
+    function formatNaira(amount) {
+      if (amount === null || amount === undefined || amount === '') return '';
+      const n = Number(amount);
+      if (Number.isNaN(n)) return '';
+      return '₦' + n.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ---------- AUTH ---------- */
+    // This page assumes you're logged in. If you're not, we send
+    // you to the login page. This check runs in the background —
+    // it does not hide or block the dashboard while it runs.
+
+    if (!_supabase) {
+      document.getElementById('product-list-container').innerHTML = `
+        <div class="empty-state">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Could not connect. Please check your internet connection and refresh the page.
+        </div>`;
+    } else {
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await _supabase.auth.signOut();
+      window.location.href = 'admin-login.html';
+    });
+
+    (async () => {
+      try {
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (!session?.user) {
+          window.location.href = 'admin-login.html';
+          return;
+        }
+        document.getElementById('logged-in-as').textContent = session.user.email;
+      } catch (err) {
+        console.error('Session check failed:', err);
+        window.location.href = 'admin-login.html';
+      }
+    })();
+
+    /* ---------- IMAGE PREVIEW ---------- */
+
+    const imgInput = document.getElementById('f-image');
+    const imgPreview = document.getElementById('img-preview');
+
+    imgInput.addEventListener('change', () => {
+      const file = imgInput.files[0];
+      pendingImageFile = file || null;
+      if (!file) {
+        imgPreview.innerHTML = 'No image selected';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imgPreview.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /* ---------- FORM SUBMIT (create or update) ---------- */
+
+    const productForm = document.getElementById('product-form');
+    const formTitle = document.getElementById('form-title');
+    const formError = document.getElementById('form-error');
+    const formSuccess = document.getElementById('form-success');
+    const submitBtn = document.getElementById('submit-btn');
+    const cancelEditBtn = document.getElementById('cancel-edit-btn');
+
+    function resetForm() {
+      productForm.reset();
+      document.getElementById('product-id').value = '';
+      document.getElementById('f-in-stock').checked = true;
+      document.getElementById('f-featured').checked = false;
+      imgPreview.innerHTML = 'No image selected';
+      pendingImageFile = null;
+      editingProductId = null;
+      formTitle.innerHTML = '<i class="fa-solid fa-circle-plus"></i> Add a Product';
+      submitBtn.textContent = 'Add Product';
+      cancelEditBtn.style.display = 'none';
+      formError.classList.remove('show');
+      formSuccess.classList.remove('show');
+    }
+
+    cancelEditBtn.addEventListener('click', resetForm);
+
+    function compressImage(file) {
+      return new Promise(function(resolve) {
+        var MAX_PX  = 800;
+        var QUALITY = 0.82;
+        var reader  = new FileReader();
+        reader.onload = function(e) {
+          var img = new Image();
+          img.onload = function() {
+            var w = img.width, h = img.height;
+            if (w > MAX_PX || h > MAX_PX) {
+              if (w >= h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
+              else        { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
+            }
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            canvas.toBlob(function(blob) {
+              resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
+            }, 'image/jpeg', QUALITY);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadProductImage(file) {
+      var compressed = await compressImage(file);
+      var path = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+
+      const { error: uploadError } = await _supabase.storage
+        .from('product-images')
+        .upload(path, compressed, { cacheControl: '3600', upsert: false });
+
+      if (uploadError) throw new Error('Image upload failed: ' + uploadError.message);
+
+      const { data } = _supabase.storage.from('product-images').getPublicUrl(path);
+      return data.publicUrl;
+    }
+
+    productForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formError.classList.remove('show');
+      formSuccess.classList.remove('show');
+
+      const name = document.getElementById('f-name').value.trim();
+      const category = document.getElementById('f-category').value;
+      const retailPriceRaw = document.getElementById('f-retail-price').value;
+
+      if (!name || !category || retailPriceRaw === '') {
+        formError.textContent = 'Please fill in product name, category, and retail price.';
+        formError.classList.add('show');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = editingProductId ? 'Saving…' : 'Adding…';
+
+      try {
+        let imageUrl = editingProductId
+          ? (allProducts.find(p => p.id === editingProductId) || {}).image_url || null
+          : null;
+
+        if (pendingImageFile) {
+          imageUrl = await uploadProductImage(pendingImageFile);
+        }
+
+        const wholesalePriceRaw = document.getElementById('f-wholesale-price').value;
+
+        const fields = {
+          name,
+          category,
+          brand_model: document.getElementById('f-brand').value.trim() || null,
+          description: document.getElementById('f-description').value.trim() || null,
+          cert_info: document.getElementById('f-cert').value.trim() || null,
+          image_url: imageUrl,
+          retail_price: Number(retailPriceRaw),
+          retail_unit_label: document.getElementById('f-retail-unit').value.trim() || 'per unit',
+          wholesale_price: wholesalePriceRaw === '' ? null : Number(wholesalePriceRaw),
+          wholesale_unit_label: document.getElementById('f-wholesale-unit').value.trim() || null,
+          highlight_tag: document.getElementById('f-highlight-tag').value || null,
+          in_stock: document.getElementById('f-in-stock').checked,
+          featured: document.getElementById('f-featured').checked,
+        };
+
+        let result;
+        if (editingProductId) {
+          result = await _supabase.from('products').update(fields).eq('id', editingProductId).select().single();
+        } else {
+          result = await _supabase.from('products').insert(fields).select().single();
+        }
+
+        if (result.error) throw new Error(result.error.message);
+
+        formSuccess.textContent = editingProductId ? 'Product updated.' : 'Product added.';
+        formSuccess.classList.add('show');
+        resetForm();
+        await loadProductList();
+
+      } catch (err) {
+        formError.textContent = err.message || 'Something went wrong. Please try again.';
+        formError.classList.add('show');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = editingProductId ? 'Save Changes' : 'Add Product';
+      }
+    });
+
+    /* ---------- PRODUCT LIST ---------- */
+
+    const listSearch = document.getElementById('list-search');
+    const listCount = document.getElementById('list-count');
+    const productListContainer = document.getElementById('product-list-container');
+
+    async function loadProductList() {
+      productListContainer.innerHTML = '<div class="loading-state">Loading products…</div>';
+      try {
+        const { data, error } = await _supabase.from('products').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        allProducts = data || [];
+        renderProductList();
+      } catch (err) {
+        console.error('Failed to load products:', err);
+        productListContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Could not load products. Please refresh the page.
+          </div>`;
+      }
+    }
+
+    function renderProductList() {
+      const searchTerm = listSearch.value.trim().toLowerCase();
+      const filtered = searchTerm
+        ? allProducts.filter(p => (p.name || '').toLowerCase().includes(searchTerm) || (p.category || '').toLowerCase().includes(searchTerm))
+        : allProducts;
+
+      listCount.textContent = `${filtered.length} of ${allProducts.length} product${allProducts.length === 1 ? '' : 's'}`;
+
+      if (allProducts.length === 0) {
+        productListContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-box-open"></i>
+            No products yet. Add your first product using the form above.
+          </div>`;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        productListContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            No products match "${escapeHtml(searchTerm)}".
+          </div>`;
+        return;
+      }
+
+      productListContainer.innerHTML = filtered.map(p => `
+        <div class="product-row" data-id="${p.id}">
+          ${p.image_url
+            ? `<img class="thumb" src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" />`
+            : `<div class="thumb-placeholder"><i class="fa-solid fa-image"></i></div>`}
+          <div class="info">
+            <div class="name">${escapeHtml(p.name)}</div>
+            <div class="meta">
+              <span class="pill ${p.in_stock ? 'pill-instock' : 'pill-outofstock'}">${p.in_stock ? 'In Stock' : 'Sold Out'}</span>
+              ${p.featured ? '<span class="pill pill-featured">Featured</span>' : ''}
+              ${escapeHtml(p.category)} · ${formatNaira(p.retail_price)} - ${escapeHtml(p.retail_unit_label || 'per unit')}${p.wholesale_price ? ' · Wholesale: ' + formatNaira(p.wholesale_price) + ' - ' + escapeHtml(p.wholesale_unit_label || '') : ''}
+            </div>
+          </div>
+          <div class="row-actions">
+            <button class="icon-btn" title="Toggle stock" data-action="stock" data-id="${p.id}"><i class="fa-solid fa-rotate"></i></button>
+            <button class="icon-btn" title="Toggle featured" data-action="feature" data-id="${p.id}"><i class="fa-solid fa-star"></i></button>
+            <button class="icon-btn" title="Edit" data-action="edit" data-id="${p.id}"><i class="fa-solid fa-pen"></i></button>
+            <button class="icon-btn danger" title="Delete" data-action="delete" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    listSearch.addEventListener('input', renderProductList);
+
+    productListContainer.addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      if (action === 'stock') {
+        btn.disabled = true;
+        await _supabase.from('products').update({ in_stock: !product.in_stock }).eq('id', id);
+        await loadProductList();
+      }
+
+      if (action === 'feature') {
+        btn.disabled = true;
+        await _supabase.from('products').update({ featured: !product.featured }).eq('id', id);
+        await loadProductList();
+      }
+
+      if (action === 'edit') {
+        startEditingProduct(product);
+      }
+
+      if (action === 'delete') {
+        const confirmed = confirm(`Delete "${product.name}"? This cannot be undone.`);
+        if (!confirmed) return;
+        btn.disabled = true;
+        await _supabase.from('products').delete().eq('id', id);
+        await loadProductList();
+      }
+    });
+
+    function startEditingProduct(product) {
+      editingProductId = product.id;
+      pendingImageFile = null;
+
+      document.getElementById('product-id').value = product.id;
+      document.getElementById('f-name').value = product.name || '';
+      document.getElementById('f-category').value = product.category || '';
+      document.getElementById('f-brand').value = product.brand_model || '';
+      document.getElementById('f-cert').value = product.cert_info || '';
+      document.getElementById('f-description').value = product.description || '';
+      document.getElementById('f-retail-price').value = product.retail_price ?? '';
+      document.getElementById('f-retail-unit').value = product.retail_unit_label || '';
+      document.getElementById('f-wholesale-price').value = product.wholesale_price ?? '';
+      document.getElementById('f-wholesale-unit').value = product.wholesale_unit_label || '';
+      document.getElementById('f-highlight-tag').value = product.highlight_tag || '';
+      document.getElementById('f-in-stock').checked = !!product.in_stock;
+      document.getElementById('f-featured').checked = !!product.featured;
+
+      imgPreview.innerHTML = product.image_url
+        ? `<img src="${escapeHtml(product.image_url)}" alt="Current image" />`
+        : 'No image selected';
+
+      formTitle.innerHTML = '<i class="fa-solid fa-pen"></i> Edit Product';
+      submitBtn.textContent = 'Save Changes';
+      cancelEditBtn.style.display = 'inline-block';
+      formError.classList.remove('show');
+      formSuccess.classList.remove('show');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Load the product list right away — it doesn't need to wait
+    // on the auth check above, since RLS already protects the
+    // actual data; worst case an unauthenticated request just
+    // returns nothing or an error, both handled above.
+    loadProductList();
+
+    } // end if (_supabase)
+  </script>
+</body>
+</html>

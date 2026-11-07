@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — NON&LO Investments Limited</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0f8ff;
+      color: #0c2d48;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border: 1px solid rgba(8,145,178,0.18);
+      border-radius: 16px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 12px 40px rgba(8,145,178,0.1);
+    }
+    .login-card img { height: 56px; width: 56px; border-radius: 50%; display: block; margin: 0 auto 16px; }
+    .login-card h1 { font-size: 18px; text-align: center; margin-bottom: 4px; }
+    .login-card p.sub { font-size: 13px; color: #4a7c96; text-align: center; margin-bottom: 28px; }
+
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: #1e4d6b; margin-bottom: 6px; }
+    .input-wrap {
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid rgba(8,145,178,0.18); border-radius: 8px;
+      padding: 0 14px; background: #fbfeff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-wrap:focus-within { border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6,182,212,0.12); }
+    .input-wrap i { color: #4a7c96; font-size: 13px; }
+    .input-wrap input {
+      flex: 1; border: none; outline: none; background: transparent;
+      padding: 11px 0; font-family: inherit; font-size: 14px; color: #0c2d48;
+    }
+    .toggle-pw { cursor: pointer; }
+
+    .btn-login {
+      width: 100%; background: #0891b2; color: #fff;
+      border: none; padding: 13px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+      margin-top: 4px; transition: background 0.2s;
+    }
+    .btn-login:hover { background: #06b6d4; }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .error-msg {
+      background: #fee2e2; color: #dc2626;
+      font-size: 13px; padding: 10px 14px; border-radius: 8px;
+      margin-bottom: 16px; display: none;
+    }
+    .error-msg.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <img src="images/logo.png" alt="NON&LO Logo" />
+    <h1>NON&amp;LO Admin</h1>
+    <p class="sub">Sign in to manage products</p>
+
+    <p class="error-msg" id="error-msg"></p>
+
+    <form id="login-form">
+      <div class="field">
+        <label for="admin-email">Email</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="admin-email" placeholder="you@nonandlo.com" autocomplete="username" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="admin-password">Password</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="admin-password" placeholder="Enter your password" autocomplete="current-password" required />
+          <i class="fa-solid fa-eye toggle-pw" id="toggle-pw"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login" id="login-btn">Sign In</button>
+    </form>
+  </div>
+
+  <script>
+    let _supabase = null;
+    try {
+      _supabase = supabase.createClient(
+        "https://njnddukprpuntwucnjog.supabase.co",
+        "sb_publishable_JWtLN41tmWFRY3UF8VU7iQ_e8y2Eo7t"
+      );
+    } catch (err) {
+      console.error('Supabase failed to load:', err);
+    }
+
+    const form = document.getElementById('login-form');
+    const btn = document.getElementById('login-btn');
+    const errorMsg = document.getElementById('error-msg');
+    const emailInput = document.getElementById('admin-email');
+    const passwordInput = document.getElementById('admin-password');
+
+    // Toggle password visibility
+    document.getElementById('toggle-pw').onclick = () => {
+      const icon = document.getElementById('toggle-pw');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    };
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('show');
+    }
+
+    function resetButton() {
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.remove('show');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showError('Please fill in both fields.');
+        return;
+      }
+
+      if (!_supabase) {
+        showError('Could not connect. Please check your internet connection and refresh the page.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+
+      try {
+        const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          showError(error.message || 'Invalid email or password.');
+          resetButton();
+          return;
+        }
+
+        // Signed in successfully — go straight to the dashboard.
+        window.location.href = 'admin.html';
+
+      } catch (err) {
+        showError('Something went wrong. Please try again.');
+        resetButton();
+      }
+    });
+
+    // If already logged in, skip straight to the dashboard.
+    // This runs quietly in the background — it never hides or
+    // blocks the login form, so there's nothing to get stuck on.
+    (async () => {
+      if (!_supabase) return;
+      try {
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (session?.user) {
+          window.location.href = 'admin.html';
+        }
+      } catch (err) {
+        console.error('Session check failed:', err);
+      }
+    })();
+  </script>
+</body>
+</html>

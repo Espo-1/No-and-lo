@@ -1,0 +1,2554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NON&LO — Surgical & Medical Equipment | Lagos, Nigeria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+*, *::before, *::after {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+:root {
+--navy: #f0f8ff;
+--navy-mid: #e0f2fe;
+--navy-light: #bae6fd;
+--teal: #0891b2;
+--teal-light: #06b6d4;
+--teal-pale: #e0f7fa;
+--silver: #4a7c96;
+--silver-light: #1e4d6b;
+--white: #ffffff;
+--cream: #f0f8ff;
+--gold: #d4a017;
+--gold-light: #f0c040;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: 'DM Sans', sans-serif;
+background: #f0f8ff;
+color: #0c2d48;
+overflow-x: hidden;
+}
+
+/* ─── CURSOR ─── */
+body {
+cursor: none;
+}
+#cursor {
+width: 12px;
+height: 12px;
+background: var(--teal-light);
+border-radius: 50%;
+position: fixed;
+top: 0;
+left: 0;
+pointer-events: none;
+z-index: 9999;
+transform: translate(-50%, -50%);
+transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
+mix-blend-mode: difference;
+}
+#cursor.expanded {
+width: 40px;
+height: 40px;
+background: rgba(20,184,166,0.3);
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 1;
+opacity: 0.4;
+}
+
+/* ─── NAV ─── */
+nav {
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 110;
+padding: 20px 5%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid rgba(6,182,212,0.2);
+box-shadow: 0 2px 20px rgba(8,145,178,0.1);
+}
+.nav-logo {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.logo-mark {
+width: 40px;
+height: 40px;
+background: linear-gradient(135deg, var(--teal), var(--teal-light));
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Cormorant Garamond', serif;
+font-weight: 600;
+font-size: 18px;
+color: white;
+}
+.logo-text {
+font-family: 'Cormorant Garamond', serif;
+font-size: 20px;
+font-weight: 600;
+letter-spacing: 0.5px;
+color: var(--white);
+}
+.logo-text span {
+color: var(--teal-light);
+}
+.nav-links {
+display: flex;
+gap: 36px;
+list-style: none;
+}
+.nav-links a {
+text-decoration: none;
+color: #1e4d6b;
+font-size: 13px;
+font-weight: 500;
+letter-spacing: 1.2px;
+text-transform: uppercase;
+transition: color 0.3s;
+}
+.nav-links a:hover {
+color: var(--teal-light);
+}
+.nav-cta {
+background: var(--teal);
+color: white !important;
+padding: 10px 22px;
+border-radius: 6px;
+font-weight: 600 !important;
+transition: background 0.3s !important;
+}
+.nav-cta:hover {
+background: var(--teal-light) !important;
+color: var(--navy) !important;
+}
+
+/* ─── MOBILE NAV TOGGLE ─── */
+.nav-toggle {
+display: none;
+flex-direction: column;
+justify-content: center;
+gap: 5px;
+width: 36px;
+height: 36px;
+background: none;
+border: none;
+cursor: pointer;
+padding: 0;
+z-index: 110;
+}
+.nav-toggle span {
+display: block;
+width: 100%;
+height: 2.5px;
+background: #0c2d48;
+border-radius: 2px;
+transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-toggle.open span:nth-child(1) {
+transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle.open span:nth-child(2) {
+opacity: 0;
+}
+.nav-toggle.open span:nth-child(3) {
+transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 880px) {
+.nav-toggle {
+display: flex;
+}
+.nav-links {
+display: flex;
+flex-direction: column;
+align-items: stretch;
+gap: 0;
+position: fixed;
+top: 0;
+right: 0;
+height: 100vh;
+width: min(78vw, 320px);
+background: #ffffff;
+box-shadow: -8px 0 32px rgba(8,145,178,0.15);
+padding: 100px 28px 28px;
+transform: translateX(100%);
+transition: transform 0.35s ease;
+z-index: 105;
+}
+.nav-links.open {
+transform: translateX(0);
+}
+.nav-links li {
+width: 100%;
+}
+.nav-links a {
+display: block;
+padding: 16px 4px;
+font-size: 14px;
+border-bottom: 1px solid rgba(6,182,212,0.12);
+}
+.nav-links .nav-cta {
+margin-top: 16px;
+text-align: center;
+border-bottom: none;
+}
+.nav-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(12,45,72,0.4);
+z-index: 104;
+}
+.nav-overlay.open {
+display: block;
+}
+}
+
+/* ─── HERO ─── */
+.hero {
+min-height: 100vh;
+display: grid;
+grid-template-columns: 1fr 1fr;
+align-items: center;
+padding: 120px 5% 80px;
+position: relative;
+overflow: hidden;
+}
+.hero-bg {
+position: absolute;
+inset: 0;
+z-index: 0;
+background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(6,182,212,0.18) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(8,145,178,0.1) 0%, transparent 60%);
+}
+.hero-grid {
+position: absolute;
+inset: 0;
+background-image: linear-gradient(rgba(6,182,212,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.08) 1px, transparent 1px);
+background-size: 60px 60px;
+}
+.hero-content {
+position: relative;
+z-index: 2;
+}
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(13,148,136,0.15);
+border: 1px solid rgba(13,148,136,0.3);
+padding: 6px 16px;
+border-radius: 100px;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(--teal-light);
+margin-bottom: 28px;
+animation: fadeUp 0.8s ease 0.2s both;
+}
+.badge-dot {
+width: 6px;
+height: 6px;
+background: var(--teal-light);
+border-radius: 50%;
+animation: pulse 2s infinite;
+}
+@keyframes pulse {
+0%,100% {
+opacity: 1
+}
+
+50% {
+opacity: 0.4
+}
+}
+@keyframes fadeUp {
+from {
+opacity: 0;
+transform: translateY(20px)
+}
+
+to {
+opacity: 1;
+transform: translateY(0)
+}
+}
+@keyframes fadeIn {
+from {
+opacity: 0
+}
+
+to {
+opacity: 1
+}
+}
+
+.hero-title {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(42px, 5.5vw, 76px);
+font-weight: 300;
+line-height: 1.08;
+margin-bottom: 24px;
+color: #0c2d48;
+animation: fadeUp 0.8s ease 0.4s both;
+}
+.hero-title em {
+font-style: italic;
+color: var(--teal-light);
+}
+.hero-title strong {
+font-weight: 600;
+display: block;
+}
+
+.hero-sub {
+font-size: 16px;
+font-weight: 300;
+color: #1e4d6b;
+line-height: 1.7;
+max-width: 460px;
+margin-bottom: 40px;
+animation: fadeUp 0.8s ease 0.6s both;
+}
+.hero-actions {
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+animation: fadeUp 0.8s ease 0.8s both;
+}
+.btn-primary {
+background: linear-gradient(135deg, var(--teal), var(--teal-light));
+color: white;
+padding: 15px 32px;
+border-radius: 8px;
+font-size: 14px;
+font-weight: 600;
+text-decoration: none;
+transition: transform 0.2s, box-shadow 0.2s;
+box-shadow: 0 4px 24px rgba(13,148,136,0.35);
+}
+.btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 32px rgba(13,148,136,0.5);
+}
+.btn-outline {
+border: 1.5px solid rgba(148,163,184,0.4);
+color: #1e4d6b;
+padding: 15px 32px;
+border-radius: 8px;
+font-size: 14px;
+font-weight: 500;
+text-decoration: none;
+transition: border-color 0.3s, color 0.3s;
+}
+.btn-outline:hover {
+border-color: var(--teal-light);
+color: var(--teal-light);
+}
+
+.hero-stats {
+display: flex;
+gap: 32px;
+margin-top: 56px;
+animation: fadeUp 0.8s ease 1s both;
+}
+.stat {
+border-left: 2px solid rgba(13,148,136,0.4);
+padding-left: 16px;
+}
+.stat-num {
+font-family: 'Cormorant Garamond', serif;
+font-size: 32px;
+font-weight: 600;
+color: #0c2d48;
+}
+.stat-lbl {
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(--silver);
+}
+
+/* Hero Visual */
+.hero-visual {
+position: relative;
+z-index: 2;
+display: flex;
+justify-content: center;
+align-items: center;
+animation: fadeIn 1.2s ease 0.5s both;
+}
+.hero-card-stack {
+position: relative;
+width: 380px;
+height: 480px;
+}
+.hero-card {
+position: absolute;
+background: rgba(255,255,255,0.95);
+border: 1px solid rgba(6,182,212,0.25);
+border-radius: 16px;
+backdrop-filter: blur(20px);
+padding: 24px;
+}
+.hero-card-main {
+width: 320px;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.hero-card-float1 {
+width: 200px;
+top: 20px;
+right: 0;
+transform: rotate(4deg);
+opacity: 0.85;
+animation: float1 4s ease-in-out infinite;
+}
+.hero-card-float2 {
+width: 180px;
+bottom: 30px;
+left: 0;
+transform: rotate(-5deg);
+opacity: 0.75;
+animation: float2 5s ease-in-out infinite;
+}
+@keyframes float1 {
+0%,100% {
+transform: rotate(4deg) translateY(0)
+}
+
+50% {
+transform: rotate(4deg) translateY(-10px)
+}
+}
+@keyframes float2 {
+0%,100% {
+transform: rotate(-5deg) translateY(0)
+}
+
+50% {
+transform: rotate(-5deg) translateY(8px)
+}
+}
+
+.card-icon {
+width: 48px;
+height: 48px;
+border-radius: 12px;
+background: linear-gradient(135deg, rgba(13,148,136,0.3), rgba(20,184,166,0.2));
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 22px;
+margin-bottom: 14px;
+}
+.card-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 6px;
+}
+.card-sub {
+font-size: 12px;
+color: var(--silver);
+}
+.card-price {
+font-family: 'DM Mono', monospace;
+font-size: 20px;
+font-weight: 500;
+color: #0891b2;
+margin-top: 12px;
+}
+.card-tag {
+display: inline-block;
+background: rgba(13,148,136,0.2);
+color: var(--teal-light);
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 1px;
+padding: 4px 10px;
+border-radius: 100px;
+text-transform: uppercase;
+}
+
+/* ─── TICKER ─── */
+.ticker-wrap {
+overflow: hidden;
+background: linear-gradient(135deg, #0891b2, #06b6d4);
+padding: 14px 0;
+border-top: 1px solid rgba(255,255,255,0.1);
+border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.ticker {
+display: flex;
+gap: 0;
+animation: ticker 30s linear infinite;
+white-space: nowrap;
+}
+.ticker-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 0 40px;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+.ticker-item::after {
+content: '✦';
+color: rgba(255,255,255,0.5);
+font-size: 8px;
+}
+@keyframes ticker {
+from {
+transform: translateX(0)
+}
+
+to {
+transform: translateX(-50%)
+}
+}
+
+/* ─── SECTION COMMON ─── */
+section {
+position: relative;
+z-index: 2;
+}
+.section-tag {
+font-family: 'DM Mono', monospace;
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(--teal-light);
+margin-bottom: 14px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.section-tag::before {
+content: '';
+width: 24px;
+height: 1px;
+background: var(--teal-light);
+}
+.section-title {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(32px, 4vw, 52px);
+font-weight: 300;
+line-height: 1.15;
+margin-bottom: 16px;
+}
+.section-title em {
+font-style: italic;
+color: var(--teal-light);
+}
+.section-desc {
+color: #1e4d6b;
+font-size: 15px;
+line-height: 1.7;
+max-width: 560px;
+}
+
+/* ─── CATEGORIES ─── */
+.categories {
+padding: 100px 5%;
+background: #e0f2fe;
+}
+.categories-header {
+display: grid;
+grid-template-columns: 1fr 1fr;
+align-items: end;
+gap: 40px;
+margin-bottom: 60px;
+}
+.categories-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+}
+.cat-card {
+background: #ffffff;
+border: 1px solid rgba(6,182,212,0.2);
+border-radius: 16px;
+padding: 28px 24px;
+box-shadow: 0 2px 16px rgba(8,145,178,0.07);
+cursor: pointer;
+transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+text-decoration: none;
+color: inherit;
+display: block;
+}
+.cat-card:hover {
+transform: translateY(-6px);
+border-color: rgba(6,182,212,0.5);
+box-shadow: 0 12px 40px rgba(8,145,178,0.15);
+}
+.cat-icon {
+font-size: 28px;
+margin-bottom: 16px;
+display: block;
+color: var(--teal);
+}
+.cat-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 8px;
+color: #0c2d48;
+}
+.cat-count {
+font-size: 12px;
+color: var(--silver);
+letter-spacing: 0.5px;
+}
+.cat-arrow {
+margin-top: 20px;
+color: var(--teal-light);
+font-size: 20px;
+transition: transform 0.3s;
+display: inline-block;
+}
+.cat-card:hover .cat-arrow {
+transform: translateX(6px);
+}
+
+/* ─── FEATURED PRODUCTS ─── */
+.products {
+padding: 100px 5%;
+background: #f0f8ff;
+}
+.products-header {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+margin-bottom: 56px;
+}
+.products-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+}
+.product-card {
+background: #ffffff;
+border: 1px solid rgba(6,182,212,0.18);
+border-radius: 20px;
+box-shadow: 0 4px 20px rgba(8,145,178,0.08);
+overflow: hidden;
+transition: transform 0.3s, box-shadow 0.3s;
+cursor: pointer;
+}
+.product-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.product-img {
+height: 200px;
+background: linear-gradient(135deg, #bae6fd, #e0f2fe);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 72px;
+position: relative;
+overflow: hidden;
+}
+.product-img::before {
+content: '';
+position: absolute;
+inset: 0;
+background: radial-gradient(circle at 50% 50%, rgba(13,148,136,0.1), transparent 70%);
+}
+.product-badge {
+position: absolute;
+top: 14px;
+left: 14px;
+background: var(--teal);
+color: white;
+font-size: 10px;
+font-weight: 700;
+padding: 4px 10px;
+border-radius: 100px;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+.product-body {
+padding: 24px;
+}
+.product-cat {
+font-size: 11px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(--teal-light);
+margin-bottom: 8px;
+}
+.product-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 22px;
+font-weight: 600;
+margin-bottom: 8px;
+line-height: 1.3;
+color: #0c2d48;
+}
+.product-desc {
+font-size: 13px;
+color: #4a7c96;
+line-height: 1.6;
+margin-bottom: 20px;
+}
+.product-footer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.product-price {
+font-family: 'DM Mono', monospace;
+font-size: 18px;
+font-weight: 500;
+color: #0c2d48;
+}
+.product-price span {
+font-size: 12px;
+color: var(--silver);
+}
+.btn-cart {
+background: linear-gradient(135deg, var(--teal), var(--teal-light));
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 8px;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-cart:hover {
+transform: scale(1.05);
+box-shadow: 0 6px 20px rgba(13,148,136,0.4);
+}
+
+/* ─── WHY US ─── */
+.why {
+padding: 100px 5%;
+background: #e0f2fe;
+}
+.why-inner {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 80px;
+align-items: center;
+}
+.why-list {
+margin-top: 40px;
+display: flex;
+flex-direction: column;
+gap: 24px;
+}
+.why-item {
+display: flex;
+gap: 18px;
+align-items: flex-start;
+padding: 20px;
+border-radius: 12px;
+border: 1px solid rgba(148,163,184,0.08);
+background: rgba(255,255,255,0.8);
+transition: border-color 0.3s;
+box-shadow: 0 2px 12px rgba(8,145,178,0.06);
+}
+.why-item:hover {
+border-color: rgba(20,184,166,0.3);
+}
+.why-num {
+font-family: 'DM Mono', monospace;
+font-size: 11px;
+color: var(--teal-light);
+font-weight: 500;
+letter-spacing: 1px;
+min-width: 28px;
+padding-top: 2px;
+}
+.why-text h4 {
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 6px;
+color: #0c2d48;
+}
+.why-text p {
+font-size: 13px;
+color: var(--silver);
+line-height: 1.6;
+}
+
+.why-visual {
+position: relative;
+height: 500px;
+}
+.cert-card {
+position: absolute;
+background: #ffffff;
+border: 1px solid rgba(6,182,212,0.25);
+border-radius: 16px;
+padding: 24px;
+box-shadow: 0 4px 24px rgba(8,145,178,0.12);
+}
+.cert-main {
+width: 260px;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+}
+.cert-tl {
+width: 180px;
+top: 40px;
+left: 0;
+transform: rotate(-6deg);
+animation: float1 5s ease-in-out infinite;
+}
+.cert-br {
+width: 170px;
+bottom: 40px;
+right: 0;
+transform: rotate(6deg);
+animation: float2 4s ease-in-out infinite;
+}
+.cert-icon {
+font-size: 32px;
+margin-bottom: 12px;
+}
+.cert-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 18px;
+font-weight: 600;
+}
+.cert-sub {
+font-size: 12px;
+color: var(--silver);
+margin-top: 4px;
+}
+.cert-bar {
+margin-top: 14px;
+height: 4px;
+background: rgba(148,163,184,0.1);
+border-radius: 100px;
+}
+.cert-bar-fill {
+height: 100%;
+border-radius: 100px;
+background: linear-gradient(90deg, var(--teal), var(--teal-light));
+}
+
+/* ─── BRANDS ─── */
+.brands {
+padding: 60px 5%;
+background: #ffffff;
+border-top: 1px solid rgba(6,182,212,0.15);
+}
+.brands-title {
+text-align: center;
+font-size: 12px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(--silver);
+margin-bottom: 36px;
+}
+.brands-row {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 48px;
+flex-wrap: wrap;
+}
+.brand-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 22px;
+font-weight: 600;
+color: rgba(8,145,178,0.35);
+letter-spacing: 2px;
+text-transform: uppercase;
+transition: color 0.3s;
+cursor: default;
+}
+.brand-name:hover {
+color: #0891b2;
+}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials {
+padding: 100px 5%;
+background: #e0f2fe;
+}
+.testi-header {
+text-align: center;
+margin-bottom: 60px;
+}
+.testi-header .section-tag {
+justify-content: center;
+}
+.testi-header .section-tag::before {
+display: none;
+}
+.testi-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+}
+.testi-card {
+background: #ffffff;
+border: 1px solid rgba(6,182,212,0.2);
+border-radius: 16px;
+padding: 32px;
+box-shadow: 0 4px 20px rgba(8,145,178,0.08);
+}
+.testi-stars {
+color: var(--gold);
+font-size: 14px;
+margin-bottom: 16px;
+letter-spacing: 2px;
+}
+.testi-text {
+font-family: 'Cormorant Garamond', serif;
+font-size: 19px;
+font-weight: 400;
+font-style: italic;
+line-height: 1.5;
+color: #0c2d48;
+margin-bottom: 24px;
+}
+.testi-author {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.testi-avatar {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(--teal), var(--navy-light));
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+}
+.testi-name {
+font-size: 14px;
+font-weight: 600;
+color: #0c2d48;
+}
+.testi-role {
+font-size: 12px;
+color: var(--silver);
+margin-top: 2px;
+}
+
+/* ─── CTA ─── */
+.cta {
+padding: 100px 5%;
+background: #f0f8ff;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+.cta::before {
+content: '';
+position: absolute;
+top: -200px;
+left: 50%;
+transform: translateX(-50%);
+width: 800px;
+height: 600px;
+background: radial-gradient(ellipse, rgba(6,182,212,0.12) 0%, transparent 70%);
+}
+.cta-inner {
+position: relative;
+z-index: 2;
+max-width: 700px;
+margin: 0 auto;
+}
+.cta-title {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(36px, 5vw, 60px);
+font-weight: 300;
+line-height: 1.15;
+margin-bottom: 20px;
+color: #0c2d48;
+}
+.cta-desc {
+font-size: 16px;
+color: #1e4d6b;
+margin-bottom: 40px;
+line-height: 1.7;
+}
+.cta-actions {
+display: flex;
+gap: 16px;
+justify-content: center;
+flex-wrap: wrap;
+}
+.btn-large {
+padding: 18px 44px;
+font-size: 15px;
+font-weight: 600;
+border-radius: 10px;
+text-decoration: none;
+}
+
+/* ─── FOOTER ─── */
+footer {
+background: #0c2d48;
+padding: 70px 5% 30px;
+border-top: 1px solid rgba(6,182,212,0.2);
+}
+.footer-top {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: 48px;
+margin-bottom: 56px;
+}
+.footer-about .logo-text {
+font-size: 22px;
+margin-bottom: 14px;
+display: block;
+}
+.footer-about p {
+font-size: 13px;
+color: #bae6fd;
+line-height: 1.7;
+max-width: 280px;
+}
+.footer-col h5 {
+font-size: 11px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(--teal-light);
+margin-bottom: 20px;
+}
+.footer-col ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.footer-col a {
+text-decoration: none;
+color: #93c5fd;
+font-size: 13px;
+transition: color 0.3s;
+}
+.footer-col a:hover {
+color: var(--white);
+}
+.footer-bottom {
+border-top: 1px solid rgba(148,163,184,0.1);
+padding-top: 28px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.footer-copy {
+font-size: 12px;
+color: #93c5fd;
+}
+.footer-legal {
+display: flex;
+gap: 24px;
+}
+.footer-legal a {
+font-size: 12px;
+color: #93c5fd;
+text-decoration: none;
+transition: color 0.3s;
+}
+.footer-legal a:hover {
+color: var(--white);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+.hero {
+grid-template-columns: 1fr;
+padding-top: 140px;
+}
+.hero-visual {
+display: none;
+}
+.categories-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+.products-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+.why-inner {
+grid-template-columns: 1fr;
+}
+.why-visual {
+display: none;
+}
+.categories-header {
+grid-template-columns: 1fr;
+}
+.footer-top {
+grid-template-columns: 1fr 1fr;
+}
+}
+@media (max-width: 640px) {
+.categories-grid {
+grid-template-columns: 1fr 1fr;
+}
+.products-grid {
+grid-template-columns: 1fr;
+}
+.testi-grid {
+grid-template-columns: 1fr;
+}
+.footer-top {
+grid-template-columns: 1fr;
+}
+.hero-stats {
+flex-wrap: wrap;
+}
+}
+
+/* ─── ENQUIRY FORM ─── */
+.enquiry-form-wrap {
+background: #fff;
+border: 1px solid rgba(6,182,212,0.2);
+border-radius: 20px;
+padding: 40px;
+margin: 40px auto 0;
+max-width: 780px;
+box-shadow: 0 8px 40px rgba(8,145,178,0.1);
+text-align: left;
+}
+.form-cols {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 18px;
+margin-bottom: 18px;
+}
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 7px;
+}
+.form-group.full {
+margin-bottom: 18px;
+}
+.form-group label {
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+color: #0891b2;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+background: #f0f8ff;
+border: 1.5px solid rgba(6,182,212,0.25);
+border-radius: 8px;
+padding: 12px 16px;
+font-family: 'DM Sans', sans-serif;
+font-size: 14px;
+color: #0c2d48;
+outline: none;
+transition: border-color 0.25s, box-shadow 0.25s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color: #06b6d4;
+box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+color: #93c5d1;
+}
+.form-group textarea {
+resize: vertical;
+min-height: 100px;
+}
+.form-submit-row {
+display: flex;
+align-items: center;
+gap: 20px;
+flex-wrap: wrap;
+margin-top: 8px;
+}
+.btn-submit {
+background: linear-gradient(135deg, #0891b2, #06b6d4);
+color: white;
+border: none;
+padding: 15px 40px;
+border-radius: 10px;
+font-family: 'DM Sans', sans-serif;
+font-size: 15px;
+font-weight: 700;
+cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+box-shadow: 0 4px 20px rgba(8,145,178,0.3);
+}
+.btn-submit:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 28px rgba(8,145,178,0.4);
+}
+.btn-submit:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+transform: none;
+}
+.form-msg {
+padding: 12px 18px;
+border-radius: 8px;
+font-size: 14px;
+font-weight: 500;
+}
+.form-msg.success {
+background: #d1fae5;
+color: #065f46;
+border: 1px solid #6ee7b7;
+}
+.form-msg.error {
+background: #fee2e2;
+color: #991b1b;
+border: 1px solid #fca5a5;
+}
+
+/* ─── CONTACT STRIP ─── */
+.contact-strip {
+display: flex;
+gap: 24px;
+justify-content: center;
+flex-wrap: wrap;
+margin-top: 48px;
+}
+.contact-item {
+display: flex;
+align-items: center;
+gap: 14px;
+background: #fff;
+border: 1px solid rgba(6,182,212,0.2);
+border-radius: 14px;
+padding: 18px 24px;
+text-decoration: none;
+color: inherit;
+transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+min-width: 200px;
+}
+.contact-item:hover {
+border-color: #06b6d4;
+box-shadow: 0 6px 24px rgba(8,145,178,0.15);
+transform: translateY(-3px);
+}
+.c-icon {
+font-size: 22px;
+color: var(--teal);
+width: 30px;
+flex-shrink: 0;
+text-align: center;
+}
+.c-text {
+text-align: left;
+min-width: 0;
+flex: 1;
+}
+.c-label {
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: #0891b2;
+font-weight: 600;
+text-align: left;
+}
+.c-val {
+font-size: 14px;
+font-weight: 600;
+color: #0c2d48;
+margin-top: 3px;
+text-align: left;
+word-break: break-word;
+}
+
+@media (max-width: 640px) {
+.form-cols {
+grid-template-columns: 1fr;
+}
+.enquiry-form-wrap {
+padding: 24px 18px;
+}
+.contact-strip {
+flex-direction: column;
+align-items: stretch;
+}
+.contact-item {
+min-width: unset;
+}
+}
+
+
+/* ── REAL PRODUCTS SECTION ── */
+.real-products {
+padding: 100px 5%;
+background: #f0f8ff;
+}
+.rp-inner {
+max-width: 1200px;
+margin: 0 auto;
+}
+.rp-header {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+margin-bottom: 48px;
+flex-wrap: wrap;
+gap: 20px;
+}
+.rp-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 28px;
+}
+.rp-loading, .rp-empty {
+grid-column: 1 / -1;
+text-align: center;
+padding: 60px 20px;
+color: #4a7c96;
+font-size: 14px;
+}
+.rp-empty i { font-size: 32px; display: block; margin-bottom: 14px; color: rgba(8,145,178,0.25); }
+.real-product-card {
+background: #ffffff;
+border: 1px solid rgba(6,182,212,0.18);
+border-radius: 20px;
+overflow: hidden;
+box-shadow: 0 4px 20px rgba(8,145,178,0.07);
+transition: transform 0.3s, box-shadow 0.3s;
+display: flex;
+flex-direction: column;
+}
+.real-product-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 16px 48px rgba(8,145,178,0.15);
+}
+.rpc-img-wrap {
+position: relative;
+height: 220px;
+background: #f8fbff;
+overflow: hidden;
+border-bottom: 1px solid rgba(6,182,212,0.1);
+}
+.rpc-img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+padding: 7px;
+padding-top: 35px;
+transition: transform 0.4s ease;
+margin-bottom: 0;
+}
+.real-product-card:hover .rpc-img {
+transform: scale(1.05);
+}
+.rpc-badges-row {
+position: absolute;
+top: 12px;
+left: 12px;
+right: 12px;
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 6px;
+flex-wrap: wrap;
+}
+.rpc-badge {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 1px;
+text-transform: uppercase;
+padding: 4px 10px;
+border-radius: 100px;
+white-space: nowrap;
+}
+.rpc-cat {
+background: rgba(8,145,178,0.1);
+color: #0891b2;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 1px;
+text-transform: uppercase;
+padding: 4px 10px;
+border-radius: 100px;
+border: 1px solid rgba(8,145,178,0.2);
+white-space: nowrap;
+margin-left: auto;
+}
+.rpc-body {
+padding: 22px;
+display: flex;
+flex-direction: column;
+flex: 1;
+}
+.rpc-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 20px;
+font-weight: 700;
+color: #0c2d48;
+line-height: 1.3;
+margin-bottom: 5px;
+}
+.rpc-sub {
+font-size: 12px;
+color: #0891b2;
+font-weight: 600;
+margin-bottom: 10px;
+letter-spacing: 0.3px;
+}
+.rpc-desc {
+font-size: 13px;
+color: #4a7c96;
+line-height: 1.65;
+margin-bottom: 18px;
+flex: 1;
+}
+.rpc-footer {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 12px;
+border-top: 1px solid rgba(6,182,212,0.1);
+padding-top: 16px;
+flex-wrap: wrap;
+}
+.rpc-price {
+font-size: 22px;
+font-weight: 800;
+color: #0c2d48;
+font-family: 'DM Mono', monospace;
+}
+.rpc-price span {
+font-size: 11px;
+color: #94a3b8;
+font-weight: 400;
+}
+.rpc-actions {
+display: flex;
+gap: 8px;
+align-items: center;
+}
+.rpc-btn-enquire {
+background: linear-gradient(135deg, #0891b2, #06b6d4);
+color: white;
+border: none;
+padding: 10px 18px;
+border-radius: 8px;
+font-size: 13px;
+font-weight: 700;
+cursor: pointer;
+white-space: nowrap;
+transition: transform 0.2s, box-shadow 0.2s;
+font-family: 'DM Sans', sans-serif;
+}
+.rpc-btn-enquire:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(8,145,178,0.35);
+}
+.rpc-btn-wa {
+width: 38px;
+height: 38px;
+border-radius: 8px;
+background: linear-gradient(135deg,#25d366,#128c7e);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+text-decoration: none;
+color: #fff;
+transition: transform 0.2s;
+}
+.rpc-btn-wa:hover {
+transform: scale(1.1);
+}
+@media (max-width: 1024px) {
+.rp-grid {
+grid-template-columns: repeat(2,1fr);
+}
+}
+@media (max-width: 640px) {
+.rp-grid {
+grid-template-columns: 1fr;
+}
+}
+
+</style>
+<!-- ─── SEO / OPEN GRAPH ───────────────────────────────────────
+     Replace YOUR_DOMAIN with the real domain once confirmed,
+     e.g. https://nonloinvestments.com
+     ─────────────────────────────────────────────────────────── -->
+<meta name="description" content="NON&LO Investments Limited — Trusted supplier of certified surgical and medical equipment in Lagos, Nigeria. Call 08037272979." />
+<meta name="keywords" content="medical equipment Lagos, surgical equipment Nigeria, blood pressure monitor, examination gloves, Lagos medical supplier, NAFDAC certified" />
+<meta name="author" content="NON&LO Investments Limited" />
+<meta name="theme-color" content="#0891b2" />
+<link rel="canonical" href="https://YOUR_DOMAIN/index.html" />
+
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn previews) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="NON&LO Investments Limited" />
+<meta property="og:title" content="NON&LO Investments Limited — Surgical & Medical Equipment" />
+<meta property="og:description" content="Your trusted supplier of certified surgical and medical equipment in Lagos, Nigeria. Quality products, competitive prices." />
+<meta property="og:url" content="https://YOUR_DOMAIN/" />
+<meta property="og:image" content="https://YOUR_DOMAIN/images/logo.png" />
+<meta property="og:image:alt" content="NON&LO Investments Limited logo" />
+<meta property="og:locale" content="en_NG" />
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="NON&LO Investments Limited — Surgical & Medical Equipment" />
+<meta name="twitter:description" content="Trusted supplier of certified surgical and medical equipment in Lagos, Nigeria." />
+<meta name="twitter:image" content="https://YOUR_DOMAIN/images/logo.png" />
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+<div class="nav-logo">
+<img src="images/logo.png" alt="Non&lo Logo" style="height:44px;width:44px;object-fit:contain;border-radius:50%;" />
+<span style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:17px;color:#0c2d48;letter-spacing:0.5px;">NON&amp;LO <span style="font-weight:400;font-size:13px;color:#4a7c96;">Investments Ltd</span></span>
+</div>
+<ul class="nav-links" id="navLinks">
+<li><a href="#categories">Products</a></li>
+<li><a href="#why">About</a></li>
+<li><a href="#testimonials">Reviews</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+</ul>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-grid"></div>
+<div class="hero-content">
+<div style="margin-bottom:28px;animation:fadeUp 0.8s ease 0s both;">
+<img src="images/logo.png" alt="Non&lo Logo" style="width:110px;height:110px;object-fit:contain;border-radius:50%;background:white;padding:6px;box-shadow:0 8px 32px rgba(13,148,136,0.25);" />
+</div>
+<div class="hero-badge">
+<span class="badge-dot"></span> Trusted Medical Equipment Supplier
+</div>
+<h1 class="hero-title">
+Precision Tools for<br />
+<em>Modern</em> Healthcare<br />
+<strong>Excellence.</strong>
+</h1>
+<p class="hero-sub">
+Non&lo Investments Limited delivers certified surgical and medical equipment to hospitals, clinics, and healthcare professionals worldwide. Quality you can trust when it matters most.
+</p>
+<div class="hero-actions">
+<a href="catalogue.html" class="btn-primary" id="browse-btn">Browse Equipment →</a>
+<a href="#contact" class="btn-outline">Request Catalogue</a>
+</div>
+<div class="hero-stats">
+<div class="stat">
+<div class="stat-num">
+2,400+
+</div>
+<div class="stat-lbl">
+Products
+</div>
+</div>
+<div class="stat">
+<div class="stat-num">
+850+
+</div>
+<div class="stat-lbl">
+Hospitals Served
+</div>
+</div>
+<div class="stat">
+<div class="stat-num">
+98%
+</div>
+<div class="stat-lbl">
+Client Satisfaction
+</div>
+</div>
+</div>
+</div>
+<div class="hero-visual">
+<div class="hero-card-stack">
+<div class="hero-card hero-card-float1">
+<div class="card-icon">
+🔬
+</div>
+<div class="card-title">
+Diagnostic Lab
+</div>
+<div class="card-sub">
+Advanced analysis tools
+</div>
+<div class="card-price">
+$1,299
+</div>
+</div>
+<div class="hero-card hero-card-main">
+<div style="margin-bottom:10px">
+<span class="card-tag">Featured</span>
+</div>
+<div class="card-icon">
+🏥
+</div>
+<div class="card-title">
+Surgical Precision Set
+</div>
+<div class="card-sub">
+Hospital-grade instruments
+</div>
+<div style="display:flex;gap:6px;margin-top:14px;flex-wrap:wrap">
+<span class="card-tag">ISO Certified</span>
+<span class="card-tag">CE Marked</span>
+</div>
+<div class="card-price">
+$4,750
+</div>
+<div style="height:3px;background:rgba(20,184,166,0.15);border-radius:100px;margin-top:14px">
+<div style="height:100%;width:72%;background:linear-gradient(90deg,var(--teal),var(--teal-light));border-radius:100px"></div>
+</div>
+<div style="font-size:11px;color:var(--silver);margin-top:6px">
+72% in stock
+</div>
+</div>
+<div class="hero-card hero-card-float2">
+<div class="card-icon">
+💊
+</div>
+<div class="card-title">
+Pharma Dispensing
+</div>
+<div class="card-sub">
+Precision dosing units
+</div>
+<div class="card-price">
+$890
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+<div class="ticker">
+<span class="ticker-item">Surgical Instruments</span>
+<span class="ticker-item">Diagnostic Equipment</span>
+<span class="ticker-item">ICU & Critical Care</span>
+<span class="ticker-item">Operating Theatre</span>
+<span class="ticker-item">Laboratory Equipment</span>
+<span class="ticker-item">Patient Monitoring</span>
+<span class="ticker-item">Orthopaedic Devices</span>
+<span class="ticker-item">Sterilisation Systems</span>
+<span class="ticker-item">Surgical Instruments</span>
+<span class="ticker-item">Diagnostic Equipment</span>
+<span class="ticker-item">ICU & Critical Care</span>
+<span class="ticker-item">Operating Theatre</span>
+<span class="ticker-item">Laboratory Equipment</span>
+<span class="ticker-item">Patient Monitoring</span>
+<span class="ticker-item">Orthopaedic Devices</span>
+<span class="ticker-item">Sterilisation Systems</span>
+</div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+<div class="categories-header">
+<div>
+<div class="section-tag">
+Product Categories
+</div>
+<h2 class="section-title">Everything Your <em>Practice</em> Needs</h2>
+</div>
+<p class="section-desc">
+From operating theatre equipment to everyday clinical tools — sourced from leading manufacturers and rigorously vetted for quality.
+</p>
+</div>
+<div class="categories-grid">
+<a href="catalogue.html?category=Surgical%20Instruments" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-scissors"></i></span>
+<div class="cat-name">
+Surgical Instruments
+</div>
+<div class="cat-count">
+320+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Cardiac%20%26%20ICU" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+<div class="cat-name">
+Cardiac & ICU
+</div>
+<div class="cat-count">
+180+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Laboratory%20%26%20Diagnostics" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-microscope"></i></span>
+<div class="cat-name">
+Laboratory & Diagnostics
+</div>
+<div class="cat-count">
+450+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Orthopaedic%20Devices" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-bone"></i></span>
+<div class="cat-name">
+Orthopaedic Devices
+</div>
+<div class="cat-count">
+210+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Clinical%20Examination" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-stethoscope"></i></span>
+<div class="cat-name">
+Clinical Examination
+</div>
+<div class="cat-count">
+390+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Infusion%20%26%20Injection" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-syringe"></i></span>
+<div class="cat-name">
+Infusion & Injection
+</div>
+<div class="cat-count">
+260+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Respiratory%20%26%20Anaesthesia" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-lungs"></i></span>
+<div class="cat-name">
+Respiratory & Anaesthesia
+</div>
+<div class="cat-count">
+140+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+<a href="catalogue.html?category=Sterilisation%20Systems" class="cat-card">
+<span class="cat-icon"><i class="fa-solid fa-pump-medical"></i></span>
+<div class="cat-name">
+Sterilisation Systems
+</div>
+<div class="cat-count">
+95+ products
+</div>
+<div class="cat-arrow">
+→
+</div>
+</a>
+</div>
+</section>
+
+<!-- REAL PRODUCTS -->
+<section class="real-products" id="products">
+<div class="rp-inner">
+<div class="rp-header">
+<div>
+<div class="section-tag">
+Our Products
+</div>
+<h2 class="section-title">Real Products, <em>Real Prices</em></h2>
+</div>
+<a href="#contact" class="btn-outline" style="text-decoration:none;padding:12px 26px;border-radius:8px;border:1.5px solid rgba(8,145,178,0.3);color:#0891b2;font-size:13px;font-weight:600;">Request Bulk Quote →</a>
+</div>
+<div class="rp-grid" id="featuredProductsGrid">
+<div class="rp-loading">Loading products…</div>
+</div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+<div class="why-inner">
+<div>
+<div class="section-tag">
+Why Non&lo
+</div>
+<h2 class="section-title">Built on <em>Trust</em> &<br />Clinical Expertise</h2>
+<p class="section-desc">
+We've partnered with healthcare institutions across the region for over a decade, providing equipment that meets the highest international standards.
+</p>
+<div class="why-list">
+<div class="why-item">
+<div class="why-num">
+01
+</div>
+<div class="why-text">
+<h4>ISO & CE Certified Products</h4>
+<p>
+Every product in our catalogue is fully certified and compliant with international medical device regulations.
+</p>
+</div>
+</div>
+<div class="why-item">
+<div class="why-num">
+02
+</div>
+<div class="why-text">
+<h4>Expert Technical Support</h4>
+<p>
+Dedicated biomedical engineers available for installation, training, and after-sales technical support.
+</p>
+</div>
+</div>
+<div class="why-item">
+<div class="why-num">
+03
+</div>
+<div class="why-text">
+<h4>Fast & Reliable Delivery</h4>
+<p>
+Nationwide distribution network ensuring your critical equipment arrives on time and in perfect condition.
+</p>
+</div>
+</div>
+<div class="why-item">
+<div class="why-num">
+04
+</div>
+<div class="why-text">
+<h4>Flexible Payment & Financing</h4>
+<p>
+Government tenders, institutional purchase orders, leasing options and flexible payment plans available.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="why-visual">
+<div class="cert-card cert-tl">
+<div class="cert-icon">
+🏅
+</div>
+<div class="cert-name">
+ISO 13485
+</div>
+<div class="cert-sub">
+Medical Devices QMS
+</div>
+</div>
+<div class="cert-card cert-main">
+<div style="text-align:center;padding:10px 0">
+<div style="font-size:52px;margin-bottom:12px">
+🏥
+</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">
+Non&lo
+</div>
+<div style="font-size:12px;color:var(--silver);margin-top:6px">
+Investments Limited
+</div>
+<div style="margin:20px 0;height:1px;background:rgba(148,163,184,0.1)"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div style="background:rgba(13,148,136,0.1);border-radius:8px;padding:12px">
+<div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--teal-light)">
+10+
+</div>
+<div style="font-size:10px;color:var(--silver);margin-top:3px">
+Years Active
+</div>
+</div>
+<div style="background:rgba(13,148,136,0.1);border-radius:8px;padding:12px">
+<div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--teal-light)">
+850+
+</div>
+<div style="font-size:10px;color:var(--silver);margin-top:3px">
+Clients
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cert-card cert-br">
+<div class="cert-icon">
+✅
+</div>
+<div class="cert-name">
+CE Marked
+</div>
+<div class="cert-sub">
+EU Standards Compliance
+</div>
+<div class="cert-bar">
+<div class="cert-bar-fill" style="width:95%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands">
+<div class="brands-title">
+Authorised Distributor for Leading Manufacturers
+</div>
+<div class="brands-row">
+<div class="brand-name">
+APEX
+</div>
+<div class="brand-name">
+DEN-V
+</div>
+<div class="brand-name">
+SuperCare
+</div>
+<div class="brand-name">
+Agary
+</div>
+<div class="brand-name">
+PB Global
+</div>
+<div class="brand-name">
+Medtronic
+</div>
+<div class="brand-name">
+B. Braun
+</div>
+<div class="brand-name">
+Surgical Co.
+</div>
+</div>
+<div class="brand-name">
+Stryker
+</div>
+<div class="brand-name">
+Olympus
+</div>
+<div class="brand-name">
+Siemens
+</div>
+<div class="brand-name">
+Philips
+</div>
+<div class="brand-name">
+GE Healthcare
+</div>
+<div class="brand-name">
+B. Braun
+</div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+<div class="testi-header">
+<div class="section-tag">
+Testimonials
+</div>
+<h2 class="section-title">Trusted by <em>Healthcare Professionals</em></h2>
+</div>
+<div class="testi-grid">
+<div class="testi-card">
+<div class="testi-stars">
+★★★★★
+</div>
+<div class="testi-text">
+"Non&lo supplied our entire ICU with ventilators and monitoring systems. The quality was exceptional and delivery was ahead of schedule."
+</div>
+<div class="testi-author">
+<div class="testi-avatar">
+👨‍⚕️
+</div>
+<div>
+<div class="testi-name">
+Dr. Benjamin Osei
+</div>
+<div class="testi-role">
+Chief Medical Officer, St. Luke's Hospital
+</div>
+</div>
+</div>
+</div>
+<div class="testi-card">
+<div class="testi-stars">
+★★★★★
+</div>
+<div class="testi-text">
+"Our surgical department has relied on Non&lo for over six years. Their after-sales support and technical team are second to none."
+</div>
+<div class="testi-author">
+<div class="testi-avatar">
+👩‍⚕️
+</div>
+<div>
+<div class="testi-name">
+Dr. Amara Mensah
+</div>
+<div class="testi-role">
+Head of Surgery, Korle Bu Teaching Hospital
+</div>
+</div>
+</div>
+</div>
+<div class="testi-card">
+<div class="testi-stars">
+★★★★★
+</div>
+<div class="testi-text">
+"From procurement to installation, Non&lo handled every aspect of equipping our new outpatient clinic. Highly professional and competitive pricing."
+</div>
+<div class="testi-author">
+<div class="testi-avatar">
+🧑‍⚕️
+</div>
+<div>
+<div class="testi-name">
+James Adjetey
+</div>
+<div class="testi-role">
+Procurement Director, Mediclinic Group
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+<div class="cta-inner">
+<div class="section-tag" style="justify-content:center">
+<span></span>Get In Touch
+</div>
+<h2 class="cta-title">Ready to Equip Your <em>Facility?</em></h2>
+<p class="cta-desc">
+Fill in the form below and our team will get back to you within 24 hours with a custom quote.
+</p>
+
+<!-- ENQUIRY FORM -->
+<div class="enquiry-form-wrap">
+<div class="form-cols">
+<div class="form-group">
+<label>Full Name *</label>
+<input type="text" id="f-name" placeholder="Dr. John Adeyemi" />
+</div>
+<div class="form-group">
+<label>Organisation / Hospital *</label>
+<input type="text" id="f-org" placeholder="Lagos University Teaching Hospital" />
+</div>
+<div class="form-group">
+<label>Phone Number *</label>
+<input type="tel" id="f-phone" placeholder="+234 800 000 0000" />
+</div>
+<div class="form-group">
+<label>Email Address *</label>
+<input type="email" id="f-email" placeholder="you@hospital.com" />
+</div>
+</div>
+<div class="form-group full">
+<label>Equipment / Product of Interest *</label>
+<select id="f-category">
+<option value="">— Select a category —</option>
+<option>Surgical Instruments</option>
+<option>Cardiac & ICU Equipment</option>
+<option>Laboratory & Diagnostics</option>
+<option>Orthopaedic Devices</option>
+<option>Clinical Examination Tools</option>
+<option>Infusion & Injection</option>
+<option>Respiratory & Anaesthesia</option>
+<option>Sterilisation Systems</option>
+<option>Other / General Enquiry</option>
+</select>
+</div>
+<div class="form-group full">
+<label>Message / Specifications</label>
+<textarea id="f-message" rows="4" placeholder="Please describe what you need, quantities, any specific brands or certifications required..."></textarea>
+</div>
+<div class="form-submit-row">
+<button class="btn-submit" id="submitBtn" onclick="submitEnquiry()">
+<span id="btnText">Send Enquiry →</span>
+<span id="btnLoader" style="display:none">Sending…</span>
+</button>
+<div id="form-feedback" style="display:none"></div>
+</div>
+</div>
+
+<!-- CONTACT INFO STRIP -->
+<div class="contact-strip">
+<a href="https://wa.me/2348037272979" target="_blank" class="contact-item">
+<div class="c-icon">
+<i class="fa-solid fa-phone"></i>
+</div>
+<div class="c-text">
+<div class="c-label">
+Call Us
+</div>
+<div class="c-val">
+08037272979
+</div>
+</div>
+</a>
+<a href="mailto:nonandloinvestmentslimited@gmail.com" class="contact-item">
+<div class="c-icon">
+<i class="fa-solid fa-envelope"></i>
+</div>
+<div class="c-text">
+<div class="c-label">
+Email
+</div>
+<div class="c-val">
+nonandloinvestmentslimited@gmail.com
+</div>
+</div>
+</a>
+<a href="https://maps.google.com/?q=6.4630109,3.3894126" target="_blank" class="contact-item">
+<div class="c-icon">
+<i class="fa-solid fa-location-dot"></i>
+</div>
+<div class="c-text">
+<div class="c-label">
+Location
+</div>
+<div class="c-val">
+Lagos Island, Lagos, Nigeria
+</div>
+</div>
+</a>
+<a href="https://wa.me/2348037272979" target="_blank" class="contact-item">
+<div class="c-icon">
+<i class="fa-brands fa-whatsapp"></i>
+</div>
+<div class="c-text">
+<div class="c-label">
+WhatsApp
+</div>
+<div class="c-val">
+Chat with us
+</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-top">
+<div class="footer-about">
+<img src="images/logo.png" alt="Non&lo Investments Limited" style="height:72px;width:72px;object-fit:contain;border-radius:50%;background:#ffffff;padding:5px;box-shadow:0 2px 16px rgba(8,145,178,0.15);margin-bottom:16px;display:block;" />
+<p>
+Your trusted partner in medical and surgical equipment supply. Certified, reliable, and committed to advancing healthcare delivery across the region.
+</p>
+</div>
+<div class="footer-col">
+<h5>Products</h5>
+<ul>
+<li><a href="#">Surgical Instruments</a></li>
+<li><a href="#">Diagnostic Equipment</a></li>
+<li><a href="#">ICU & Critical Care</a></li>
+<li><a href="#">Lab Equipment</a></li>
+<li><a href="#">Orthopaedic Devices</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Company</h5>
+<ul>
+<li><a href="#why">About Us</a></li>
+<li><a href="#">Our Team</a></li>
+<li><a href="#why">Certifications</a></li>
+<li><a href="#">Careers</a></li>
+<li><a href="#">News</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Support</h5>
+<ul>
+<li><a href="#contact">Get a Quote</a></li>
+<li><a href="https://wa.me/2348037272979" target="_blank">Technical Support</a></li>
+<li><a href="mailto:nonandloinvestmentslimited@gmail.com">Service & Repair</a></li>
+<li><a href="#contact">Training</a></li>
+<li><a href="#contact">Contact Us</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-copy">
+© 2026 Non&lo Investments Limited. All rights reserved.
+</div>
+<div class="footer-legal">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="#">Regulatory Compliance</a>
+</div>
+</div>
+</footer>
+
+<!-- EmailJS -->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/products.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" crossorigin="anonymous"></script>
+<script>
+(function() {
+// Init EmailJS on load
+window.addEventListener('load', function() {
+try {
+if (window.emailjs) {
+emailjs.init({
+publicKey: 'z9ahOBv2NbdC4AyXM'
+});
+}
+} catch(e) {}
+});
+
+// On DOM ready
+document.addEventListener('DOMContentLoaded',
+function() {
+
+// Render featured products on the homepage
+renderFeaturedProducts();
+
+// Mobile nav toggle
+var navToggle = document.getElementById('navToggle');
+var navLinks = document.getElementById('navLinks');
+var navOverlay = document.getElementById('navOverlay');
+function closeMenu() {
+navToggle.classList.remove('open');
+navLinks.classList.remove('open');
+navOverlay.classList.remove('open');
+navToggle.setAttribute('aria-expanded', 'false');
+}
+function openMenu() {
+navToggle.classList.add('open');
+navLinks.classList.add('open');
+navOverlay.classList.add('open');
+navToggle.setAttribute('aria-expanded', 'true');
+}
+if (navToggle && navLinks && navOverlay) {
+navToggle.addEventListener('click', function() {
+if (navLinks.classList.contains('open')) {
+closeMenu();
+} else {
+openMenu();
+}
+});
+navOverlay.addEventListener('click',
+closeMenu);
+navLinks.querySelectorAll('a').forEach(function(a) {
+a.addEventListener('click', closeMenu);
+});
+window.addEventListener('resize',
+function() {
+if (window.innerWidth > 880) {
+closeMenu();
+}
+});
+}
+
+// Custom cursor - desktop only
+var cursor = document.getElementById('cursor');
+if (cursor) {
+if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+document.addEventListener('mousemove', function(e) {
+cursor.style.left = e.clientX + 'px';
+cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .cat-card, .product-card, .real-product-card').forEach(function(el) {
+el.addEventListener('mouseenter', function() {
+cursor.classList.add('expanded');
+});
+el.addEventListener('mouseleave', function() {
+cursor.classList.remove('expanded');
+});
+});
+} else {
+cursor.style.display = 'none';
+document.body.style.cursor = 'auto';
+}
+}
+
+// Scroll reveal
+if ('IntersectionObserver' in window) {
+var io = new IntersectionObserver(function(entries) {
+entries.forEach(function(entry) {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
+}, {
+threshold: 0.1
+});
+document.querySelectorAll('.cat-card, .product-card, .real-product-card, .testi-card, .why-item').forEach(function(el) {
+el.style.opacity = '0';
+el.style.transform = 'translateY(24px)';
+el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+io.observe(el);
+});
+}
+
+// Floating WhatsApp button
+var wa = document.createElement('a');
+wa.href = 'https://wa.me/2348037272979?text=Hello%20NON%26LO%21%20I%20am%20interested%20in%20your%20medical%20equipment.';
+wa.target = '_blank';
+wa.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+wa.title = 'Chat on WhatsApp';
+wa.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:998;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform 0.2s,box-shadow 0.2s;';
+wa.onmouseenter = function() {
+this.style.transform = 'scale(1.1)';
+};
+wa.onmouseleave = function() {
+this.style.transform = 'scale(1)';
+};
+document.body.appendChild(wa);
+});
+})();
+
+// Cart
+var cartCount = 0;
+function addToCart(btn) {
+cartCount++;
+var orig = btn.textContent;
+btn.textContent = 'Added!';
+btn.style.background = 'linear-gradient(135deg,#059669,#10b981)';
+setTimeout(function() {
+btn.textContent = orig; btn.style.background = '';
+}, 1800);
+}
+
+// Enquire product
+function enquireProduct(name) {
+var cat = document.getElementById('f-category');
+var msg = document.getElementById('f-message');
+if (cat) cat.value = 'Other / General Enquiry';
+if (msg) msg.value = 'I am interested in: ' + name + '. Please send pricing and availability.';
+var el = document.getElementById('contact');
+if (el) el.scrollIntoView({
+behavior: 'smooth'
+});
+}
+
+// Form helpers
+function showFeedback(msg, type) {
+var el = document.getElementById('form-feedback');
+if (!el) return;
+el.textContent = msg;
+el.style.display = 'block';
+el.className = 'form-msg ' + type;
+setTimeout(function() {
+el.style.display = 'none';
+}, 8000);
+}
+
+function setLoading(on) {
+var t = document.getElementById('btnText');
+var l = document.getElementById('btnLoader');
+var b = document.getElementById('submitBtn');
+if (t) t.style.display = on ? 'none': 'inline';
+if (l) l.style.display = on ? 'inline': 'none';
+if (b) b.disabled = on;
+}
+
+function clearForm() {
+['f-name',
+'f-org',
+'f-phone',
+'f-email',
+'f-message'].forEach(function(id) {
+var el = document.getElementById(id);
+if (el) el.value = '';
+});
+var c = document.getElementById('f-category');
+if (c) c.value = '';
+}
+
+// Submit enquiry
+function submitEnquiry() {
+var name = (document.getElementById('f-name') || {
+value: ''
+}).value.trim();
+var org = (document.getElementById('f-org') || {
+value: ''
+}).value.trim();
+var phone = (document.getElementById('f-phone') || {
+value: ''
+}).value.trim();
+var email = (document.getElementById('f-email') || {
+value: ''
+}).value.trim();
+var category = (document.getElementById('f-category') || {
+value: ''
+}).value;
+var message = (document.getElementById('f-message') || {
+value: ''
+}).value.trim();
+
+if (!name || !org || !phone || !email || !category) {
+showFeedback('Please fill in all required fields.', 'error');
+return;
+}
+if (email.indexOf('@') < 1 || email.lastIndexOf('.') < email.indexOf('@')) {
+showFeedback('Please enter a valid email address.', 'error');
+return;
+}
+
+setLoading(true);
+
+if (!window.emailjs) {
+fallbackWA(name, org, phone, email, category, message);
+return;
+}
+
+emailjs.send('service_qcc4jad', 'template_tpz7iya', {
+from_name: name,
+organisation: org,
+phone: phone,
+reply_to: email,
+category: category,
+message: message
+}).then(function() {
+setLoading(false);
+showFeedback('Enquiry sent! We will contact you within 24 hours.', 'success');
+clearForm();
+}).catch(function(err) {
+console.error('EmailJS:', err);
+setLoading(false);
+fallbackWA(name, org, phone, email, category, message);
+});
+}
+
+function fallbackWA(name, org, phone, email, category, message) {
+var txt = 'Hello NON&LO! New Enquiry'
++ '%0AName: ' + encodeURIComponent(name)
++ '%0AOrganisation: ' + encodeURIComponent(org)
++ '%0APhone: ' + encodeURIComponent(phone)
++ '%0AEmail: ' + encodeURIComponent(email)
++ '%0ACategory: ' + encodeURIComponent(category)
++ '%0AMessage: ' + encodeURIComponent(message || 'N/A');
+showFeedback('Redirecting to WhatsApp...', 'success');
+setTimeout(function() {
+window.open('https://wa.me/2348037272979?text=' + txt, '_blank');
+}, 1200);
+}
+
+/* ── FEATURED PRODUCTS (homepage) ── */
+function buildProductCardHtml(p) {
+var img = p.image_url
+? '<img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name) + '" class="rpc-img" />'
+: '<div class="rpc-img" style="display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:13px;">No image</div>';
+
+var stockBadge = p.in_stock
+? '<span class="rpc-badge" style="background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;">In Stock</span>'
+: '<span class="rpc-badge" style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;">Sold Out</span>';
+
+var tagBadge = p.highlight_tag
+? '<span class="rpc-cat">' + escapeHtml(p.highlight_tag) + '</span>'
+: '<span class="rpc-cat">' + escapeHtml(p.category) + '</span>';
+
+var brandLine = p.brand_model
+? '<div class="rpc-brand">' + escapeHtml(p.brand_model) + (p.cert_info ? ' — ' + escapeHtml(p.cert_info) : '') + '</div>'
+: (p.cert_info ? '<div class="rpc-brand">' + escapeHtml(p.cert_info) + '</div>' : '');
+
+var wholesaleLine = p.wholesale_price
+? '<div class="rpc-carton">Carton: <strong style="color:#0891b2;">' + formatNaira(p.wholesale_price) + '</strong> ' + escapeHtml(p.wholesale_unit_label || '') + '</div>'
+: '';
+
+var waLink = productWhatsAppLink(p);
+
+return ''
++ '<div class="real-product-card">'
++ '<div class="rpc-img-wrap">'
++ img
++ '<div class="rpc-badges-row">' + stockBadge + tagBadge + '</div>'
++ '</div>'
++ '<div class="rpc-body">'
++ '<h3 class="rpc-name">' + escapeHtml(p.name) + '</h3>'
++ brandLine
++ '<p class="rpc-desc">' + escapeHtml(p.description || '') + '</p>'
++ '<div class="rpc-price-row">'
++ '<div>'
++ '<span class="rpc-price">' + formatNaira(p.retail_price) + '</span>'
++ ' <span class="rpc-unit">' + escapeHtml(p.retail_unit_label || 'per unit') + '</span>'
++ wholesaleLine
++ '</div>'
++ '</div>'
++ '<div class="rpc-actions">'
++ '<button class="rpc-btn-enquire" onclick="enquireProduct(\'' + escapeHtml(p.name).replace(/'/g, "\\'") + '\')">Enquire</button>'
++ '<a href="' + waLink + '" target="_blank" class="rpc-btn-wa" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'
++ '</div>'
++ '</div>'
++ '</div>';
+}
+
+async function renderFeaturedProducts() {
+var grid = document.getElementById('featuredProductsGrid');
+if (!grid) return;
+
+var result = await fetchProducts({ featuredOnly: true, inStockOnly: false, limit: 8 });
+
+if (result.error) {
+grid.innerHTML = '<div class="rp-empty"><i class="fa-solid fa-triangle-exclamation"></i>Could not load products right now. Please refresh the page.</div>';
+return;
+}
+
+if (!result.data || result.data.length === 0) {
+grid.innerHTML = '<div class="rp-empty"><i class="fa-solid fa-box-open"></i>No featured products yet. Check back soon, or browse the full catalogue.</div>';
+return;
+}
+
+grid.innerHTML = result.data.map(buildProductCardHtml).join('');
+}
+</script>
+</body>
+</html>

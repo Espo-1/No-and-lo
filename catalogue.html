@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Catalogue — NON&LO Investments Limited</title>
+
+  <!-- ─── SEO / OPEN GRAPH ───────────────────────────────────────
+       Replace YOUR_DOMAIN with the real domain once confirmed
+       ─────────────────────────────────────────────────────────── -->
+  <meta name="description" content="Browse NON&LO's full catalogue of certified surgical and medical equipment. Filter by category, search by name, and send your order via WhatsApp." />
+  <meta name="keywords" content="medical equipment catalogue Lagos, surgical supplies Nigeria, buy medical equipment, NAFDAC certified equipment" />
+  <meta name="author" content="NON&LO Investments Limited" />
+  <meta name="theme-color" content="#0c2d48" />
+  <link rel="canonical" href="https://YOUR_DOMAIN/catalogue.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NON&LO Investments Limited" />
+  <meta property="og:title" content="Product Catalogue — NON&LO Investments Limited" />
+  <meta property="og:description" content="Browse our full catalogue of certified surgical and medical equipment. Filter by category and send your order via WhatsApp." />
+  <meta property="og:url" content="https://YOUR_DOMAIN/catalogue.html" />
+  <meta property="og:image" content="https://YOUR_DOMAIN/images/logo.png" />
+  <meta property="og:image:alt" content="NON&LO Investments Limited logo" />
+  <meta property="og:locale" content="en_NG" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Product Catalogue — NON&LO Investments Limited" />
+  <meta name="twitter:description" content="Browse certified surgical and medical equipment from NON&LO, Lagos Nigeria." />
+  <meta name="twitter:image" content="https://YOUR_DOMAIN/images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0f8ff; color: #0c2d48;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .cat-header {
+      background: linear-gradient(135deg, #0891b2, #06b6d4);
+      padding: 20px 5%; display: flex;
+      align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 4px 20px rgba(8,145,178,0.25);
+    }
+    .cat-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .cat-logo:hover { opacity: 0.85; }
+    .cat-logo img {
+      height: 40px; width: 40px; border-radius: 50%;
+      object-fit: contain; background: #fff; flex-shrink: 0;
+    }
+    .cat-logo span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700;
+      color: white; letter-spacing: 1px;
+    }
+    .cat-logo small { font-size: 12px; font-weight: 400; opacity: 0.85; display: block; }
+    .cat-header-right { display: flex; align-items: center; gap: 14px; }
+    .cart-btn {
+      position: relative;
+      background: white; color: #0891b2;
+      border: none; border-radius: 10px;
+      padding: 10px 20px; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+    .cart-count {
+      background: #ef4444; color: white;
+      font-size: 11px; font-weight: 800;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* ── HERO STRIP ── */
+    .cat-hero {
+      background: #0c2d48;
+      padding: 40px 5%; text-align: center;
+    }
+    .cat-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300; color: white; margin-bottom: 10px;
+    }
+    .cat-hero h1 em { font-style: italic; color: #06b6d4; }
+    .cat-hero p { color: #93c5d1; font-size: 14px; }
+    .cat-tip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(6,182,212,0.15);
+      border: 1px solid rgba(6,182,212,0.3);
+      color: #06b6d4; font-size: 12px; font-weight: 600;
+      padding: 8px 18px; border-radius: 100px;
+      margin-top: 16px; letter-spacing: 0.5px;
+    }
+
+    /* ── SEARCH ── */
+    .search-bar {
+      padding: 20px 5% 0; background: white;
+      display: flex; align-items: center; gap: 12px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .search-bar i { color: #4a7c96; font-size: 14px; }
+    .search-bar input {
+      flex: 1; border: 1.5px solid rgba(6,182,212,0.25); border-radius: 100px;
+      padding: 11px 18px; font-size: 13px; font-family: 'DM Sans', sans-serif;
+      color: #0c2d48; outline: none; transition: border-color 0.2s;
+    }
+    .search-bar input:focus { border-color: #0891b2; }
+    .search-bar input::placeholder { color: #94a3b8; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      padding: 20px 5%; background: white;
+      border-bottom: 1px solid rgba(6,182,212,0.15);
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .filter-label { font-size: 12px; font-weight: 700; color: #4a7c96; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+    .filter-btn {
+      background: #f0f8ff; border: 1.5px solid rgba(6,182,212,0.25);
+      color: #0891b2; font-size: 12px; font-weight: 600;
+      padding: 7px 16px; border-radius: 100px;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #0891b2; color: white; border-color: #0891b2;
+    }
+    @media (max-width: 640px) {
+      .filter-bar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 16px 5%;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .filter-bar::-webkit-scrollbar { display: none; }
+    }
+
+    /* ── GRID ── */
+    .cat-grid {
+      padding: 32px 5%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .cat-loading, .cat-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #4a7c96;
+      font-size: 14px;
+    }
+    .cat-empty i { font-size: 32px; display: block; margin-bottom: 14px; color: rgba(8,145,178,0.25); }
+    .load-more-wrap {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+    .load-more-btn {
+      background: none; border: 1.5px solid #0891b2; color: #0891b2;
+      padding: 11px 32px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .load-more-btn:hover { background: #0891b2; color: #fff; }
+    .cat-item {
+      background: white;
+      border: 2.5px solid rgba(6,182,212,0.15);
+      border-radius: 16px; overflow: hidden;
+      display: flex; gap: 0;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      box-shadow: 0 2px 12px rgba(8,145,178,0.06);
+      user-select: none;
+    }
+    .cat-item:hover {
+      border-color: rgba(6,182,212,0.4);
+      box-shadow: 0 8px 28px rgba(8,145,178,0.13);
+      transform: translateY(-3px);
+    }
+    .cat-item.selected {
+      border-color: #0891b2;
+      background: #f0fbff;
+      box-shadow: 0 8px 28px rgba(8,145,178,0.2);
+    }
+    .cat-check {
+      position: absolute; top: 12px; right: 12px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(6,182,212,0.1);
+      border: 2px solid rgba(6,182,212,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .cat-item.selected .cat-check {
+      background: #0891b2; border-color: #0891b2;
+    }
+    .checkmark { font-size: 13px; color: white; opacity: 0; transition: opacity 0.2s; }
+    .cat-item.selected .checkmark { opacity: 1; }
+
+    .cat-img-wrap {
+      width: 140px; min-width: 140px;
+      background: #f8fbff;
+      border-right: 1px solid rgba(6,182,212,0.1);
+      display: flex; align-items: center; justify-content: center;
+      padding: 12px;
+    }
+    .cat-img { width: 100%; height: 120px; object-fit: contain; }
+
+    .cat-info { padding: 16px 40px 16px 16px; flex: 1; }
+    .cat-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: #0891b2;
+      margin-bottom: 5px;
+    }
+    .cat-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700;
+      color: #0c2d48; margin-bottom: 3px; line-height: 1.3;
+    }
+    .cat-sub { font-size: 11px; color: #0891b2; margin-bottom: 8px; }
+    .cat-price-unit {
+      font-family: 'DM Mono', monospace;
+      font-size: 17px; font-weight: 700; color: #0c2d48;
+    }
+    .cat-price-unit span { font-size: 11px; color: #94a3b8; font-weight: 400; }
+    .cat-price-bulk { font-size: 12px; color: #4a7c96; margin-top: 3px; }
+    .cat-price-bulk span { color: #94a3b8; }
+    .cat-desc { font-size: 12px; color: #4a7c96; line-height: 1.55; margin-top: 8px; }
+
+    /* ── CART PANEL ── */
+    .cart-panel {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #0c2d48;
+      border-top: 2px solid #0891b2;
+      padding: 16px 5%;
+      display: none;
+      align-items: center; justify-content: space-between;
+      z-index: 200; flex-wrap: wrap; gap: 12px;
+      box-shadow: 0 -8px 32px rgba(0,0,0,0.2);
+    }
+    .cart-panel.visible { display: flex; }
+    .cart-summary { color: white; }
+    .cart-summary strong { color: #06b6d4; font-size: 18px; }
+    .cart-summary span { font-size: 13px; color: #93c5d1; display: block; margin-top: 2px; }
+    .cart-send-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .send-btn {
+      padding: 12px 24px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; border: none;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform 0.2s;
+    }
+    .send-btn:hover { transform: translateY(-2px); }
+    .send-wa { background: linear-gradient(135deg,#25d366,#128c7e); color: white; }
+    .send-mail { background: linear-gradient(135deg,#0891b2,#06b6d4); color: white; }
+    .clear-btn {
+      background: rgba(255,255,255,0.1); color: #93c5d1;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 16px; border-radius: 8px;
+      font-size: 13px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center; padding: 60px 5%; color: #4a7c96;
+    }
+
+    @media (max-width: 640px) {
+      .cat-grid { grid-template-columns: 1fr; padding: 20px 4%; }
+      .cat-img-wrap { width: 110px; min-width: 110px; }
+      .cat-hero h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="cat-header">
+    <a href="index.html" class="cat-logo">
+      <img src="images/logo.png" alt="NON&LO Logo" />
+      <span>NON&amp;LO <small>Surgical &amp; Medical Equipment</small></span>
+    </a>
+    <div class="cat-header-right">
+      <button class="cart-btn" onclick="scrollToCart()">
+        <i class="fa-solid fa-cart-shopping"></i> My List
+        <span class="cart-count" id="cartBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="cat-hero">
+    <h1>Product <em>Catalogue</em></h1>
+    <p>Browse and select the products you need — we'll send you a quote instantly.</p>
+    <div class="cat-tip"><i class="fa-solid fa-circle-info"></i> Hold &amp; tap products to select multiple items</div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="catalogueSearch" placeholder="Search products by name, brand, or keyword..." />
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-cat="All" onclick="filterCat('All', this)">All Products</button>
+    <button class="filter-btn" data-cat="Surgical Instruments" onclick="filterCat('Surgical Instruments', this)">Surgical Instruments</button>
+    <button class="filter-btn" data-cat="Cardiac & ICU" onclick="filterCat('Cardiac & ICU', this)">Cardiac & ICU</button>
+    <button class="filter-btn" data-cat="Laboratory & Diagnostics" onclick="filterCat('Laboratory & Diagnostics', this)">Laboratory & Diagnostics</button>
+    <button class="filter-btn" data-cat="Orthopaedic Devices" onclick="filterCat('Orthopaedic Devices', this)">Orthopaedic Devices</button>
+    <button class="filter-btn" data-cat="Clinical Examination" onclick="filterCat('Clinical Examination', this)">Clinical Examination</button>
+    <button class="filter-btn" data-cat="Infusion & Injection" onclick="filterCat('Infusion & Injection', this)">Infusion & Injection</button>
+    <button class="filter-btn" data-cat="Respiratory & Anaesthesia" onclick="filterCat('Respiratory & Anaesthesia', this)">Respiratory & Anaesthesia</button>
+    <button class="filter-btn" data-cat="Sterilisation Systems" onclick="filterCat('Sterilisation Systems', this)">Sterilisation Systems</button>
+  </div>
+
+  <!-- CATALOGUE GRID -->
+  <div class="cat-grid" id="catGrid">
+    <div class="cat-loading">Loading products…</div>
+  </div>
+
+  <!-- CART BOTTOM PANEL -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-summary">
+      <strong id="cartCount">0 items</strong> selected
+      <span id="cartNames" style="max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+    </div>
+    <div class="cart-send-btns">
+      <button class="clear-btn" onclick="clearCart()"><i class="fa-solid fa-xmark"></i> Clear</button>
+      <button class="send-btn send-wa" onclick="sendWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Send via WhatsApp</button>
+      <button class="send-btn send-mail" onclick="sendEmail()"><i class="fa-solid fa-envelope"></i> Send via Email</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/products.js"></script>
+  <script>
+    var selectedItems = [];
+    var allCatalogueProducts = [];
+    var currentFilter = 'All';
+    var PAGE_SIZE = 20;
+    var currentPage = 1;
+
+    function toggleSelect(el) {
+      var id    = el.dataset.id;
+      var name  = el.dataset.name;
+      var price = el.dataset.price;
+      var idx   = selectedItems.findIndex(function(i) { return i.id === id; });
+      if (idx > -1) {
+        selectedItems.splice(idx, 1);
+        el.classList.remove('selected');
+      } else {
+        selectedItems.push({ id: id, name: name, price: price });
+        el.classList.add('selected');
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      var count = selectedItems.length;
+      document.getElementById('cartBadge').textContent = count;
+      document.getElementById('cartCount').textContent = count + ' item' + (count !== 1 ? 's' : '');
+      document.getElementById('cartNames').textContent = selectedItems.map(function(i) { return i.name; }).join(', ');
+      var panel = document.getElementById('cartPanel');
+      if (count > 0) { panel.classList.add('visible'); }
+      else           { panel.classList.remove('visible'); }
+    }
+
+    function clearCart() {
+      selectedItems = [];
+      document.querySelectorAll('.cat-item.selected').forEach(function(el) { el.classList.remove('selected'); });
+      updateCart();
+    }
+
+    function buildMessage() {
+      var lines = ['Hello NON&LO! I would like to enquire about the following products:', ''];
+      selectedItems.forEach(function(item, i) {
+        lines.push((i+1) + '. ' + item.name + ' — ' + item.price);
+      });
+      lines.push('');
+      lines.push('Please send me availability and bulk pricing. Thank you.');
+      return lines.join('\n');
+    }
+
+    function sendWhatsApp() {
+      if (selectedItems.length === 0) return;
+      var msg = encodeURIComponent(buildMessage());
+      window.open('https://wa.me/2348037272979?text=' + msg, '_blank');
+    }
+
+    function sendEmail() {
+      if (selectedItems.length === 0) return;
+      var subject = encodeURIComponent('Product Enquiry — NON&LO Catalogue');
+      var body    = encodeURIComponent(buildMessage());
+      window.open('mailto:nonandloinvestmentslimited@gmail.com?subject=' + subject + '&body=' + body, '_blank');
+    }
+
+    function scrollToCart() {
+      document.getElementById('cartPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ── DYNAMIC PRODUCT LOADING ── */
+
+    function buildCatItemHtml(p) {
+      var img = p.image_url
+        ? '<img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name) + '" class="cat-img" />'
+        : '<div class="cat-img" style="display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;">No image</div>';
+
+      var subLine = p.brand_model
+        ? escapeHtml(p.brand_model) + (p.cert_info ? ' — ' + escapeHtml(p.cert_info) : '')
+        : escapeHtml(p.cert_info || '');
+
+      var bulkLine = p.wholesale_price
+        ? '<div class="cat-price-bulk">' + formatNaira(p.wholesale_price) + ' <span>' + escapeHtml(p.wholesale_unit_label || '') + '</span></div>'
+        : '';
+
+      var priceLabel = formatNaira(p.retail_price);
+      var safeName = escapeHtml(p.name);
+
+      return ''
+        + '<div class="cat-item" data-id="' + p.id + '" data-name="' + safeName + '" data-price="' + priceLabel + '" data-category="' + escapeHtml(p.category) + '" onclick="toggleSelect(this)">'
+        + '<div class="cat-check"><span class="checkmark">✓</span></div>'
+        + '<div class="cat-img-wrap">' + img + '</div>'
+        + '<div class="cat-info">'
+        + '<div class="cat-tag">' + escapeHtml(p.category) + '</div>'
+        + '<div class="cat-name">' + safeName + '</div>'
+        + (subLine ? '<div class="cat-sub">' + subLine + '</div>' : '')
+        + '<div class="cat-price-unit">' + priceLabel + ' <span>' + escapeHtml(p.retail_unit_label || 'per unit') + '</span></div>'
+        + bulkLine
+        + '<div class="cat-desc">' + escapeHtml(p.description || '') + '</div>'
+        + '</div>'
+        + '</div>';
+    }
+
+    function renderCatalogueGrid() {
+      var grid = document.getElementById('catGrid');
+      var searchTerm = (document.getElementById('catalogueSearch').value || '').trim().toLowerCase();
+
+      var visible = currentFilter === 'All'
+        ? allCatalogueProducts
+        : allCatalogueProducts.filter(function(p) { return p.category === currentFilter; });
+
+      if (searchTerm) {
+        visible = visible.filter(function(p) {
+          return (p.name || '').toLowerCase().includes(searchTerm)
+            || (p.brand_model || '').toLowerCase().includes(searchTerm)
+            || (p.description || '').toLowerCase().includes(searchTerm);
+        });
+      }
+
+      if (allCatalogueProducts.length === 0) {
+        grid.innerHTML = '<div class="cat-empty"><i class="fa-solid fa-box-open"></i>No products yet. Check back soon.</div>';
+        return;
+      }
+      if (visible.length === 0) {
+        grid.innerHTML = '<div class="cat-empty"><i class="fa-solid fa-magnifying-glass"></i>No products match your search.</div>';
+        return;
+      }
+
+      var totalShowing = Math.min(currentPage * PAGE_SIZE, visible.length);
+      var hasMore = totalShowing < visible.length;
+
+      grid.innerHTML = visible.slice(0, totalShowing).map(buildCatItemHtml).join('');
+
+      if (hasMore) {
+        var remaining = visible.length - totalShowing;
+        var wrap = document.createElement('div');
+        wrap.className = 'load-more-wrap';
+        wrap.innerHTML = '<button class="load-more-btn" onclick="loadMoreProducts()">Load more (' + remaining + ' remaining)</button>';
+        grid.appendChild(wrap);
+      }
+    }
+
+    function loadMoreProducts() {
+      currentPage++;
+      renderCatalogueGrid();
+    }
+
+    document.getElementById('catalogueSearch').addEventListener('input', function() {
+      currentPage = 1;
+      renderCatalogueGrid();
+    });
+
+    function filterCat(cat, btn) {
+      currentFilter = cat;
+      currentPage = 1;
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderCatalogueGrid();
+    }
+
+    async function loadCatalogueProducts() {
+      var grid = document.getElementById('catGrid');
+      var result = await fetchProducts({});
+
+      if (result.error) {
+        grid.innerHTML = '<div class="cat-empty"><i class="fa-solid fa-triangle-exclamation"></i>Could not load products right now. Please refresh the page.</div>';
+        return;
+      }
+
+      allCatalogueProducts = result.data || [];
+
+      // If the page was opened with ?category=X (from a homepage
+      // category card), pre-select that filter on load.
+      var params = new URLSearchParams(window.location.search);
+      var requestedCategory = params.get('category');
+      if (requestedCategory) {
+        var matchingBtn = document.querySelector('.filter-btn[data-cat="' + requestedCategory.replace(/"/g, '') + '"]');
+        if (matchingBtn) {
+          document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+          matchingBtn.classList.add('active');
+          currentFilter = requestedCategory;
+        }
+      }
+
+      renderCatalogueGrid();
+    }
+
+    loadCatalogueProducts();
+  </script>
+</body>
+</html>
